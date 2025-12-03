@@ -35,26 +35,28 @@ Add and verify an email identity (the email address that will receive receipt su
 Verification includes clicking a link from a verification email to confirm control over the address.
 4. IAM Role for Lambda Permissions
 Role Name: receipt processing lambda role.
-Attach the following AWS managed policies:
-Amazon S3 ReadOnly Access
-Amazon Textract Full Access
-Amazon DynamoDB Full Access
-Amazon SES Full Access
-AWS Lambda Basic Execution Role
-This role allows Lambda to securely interact with the necessary services.
 
-5. Creating the Lambda Function
+Attach the following AWS managed policies:
+1.Amazon S3 ReadOnly Access
+2.Amazon Textract Full Access
+3.Amazon DynamoDB Full Access
+4.Amazon SES Full Access
+5. AWS Lambda Basic Execution Role
+       This role allows Lambda to securely interact with the necessary services.
+
+6. Creating the Lambda Function
 Author from Scratch:
-Function Name: receipt processor.
-Runtime: Python 3.9.
-Assign the previously created IAM role to Lambda.
-Increase function timeout to 3 minutes to accommodate potentially longer Textract processing times.
-Add environment variables required for function execution:
-Key	Value	Purpose
-Dynamo DB table	receipts	Name of the DynamoDB table
-SES sender email	Verified email address	Source email address for sending summaries
-SES recipient email	Verified email address	Destination address to receive receipt summaries
-6. Lambda Function Code Deployment
+.Function Name: receipt processor.
+.Runtime: Python 3.9.
+.Assign the previously created IAM role to Lambda.
+.Increase function timeout to 3 minutes to accommodate potentially longer Textract processing times.
+.Add environment variables required for function execution:
+.Key	Value	Purpose
+.Dynamo DB table	receipts	Name of the DynamoDB table
+.SES sender email	Verified email address	Source email address for sending summaries
+.SES recipient email	Verified email address	Destination address to receive receipt
+ 
+8. Lambda Function Code Deployment
 Replace default starter code with provided Python script (explained in video notes).
 Code integrates:
 File download from S3
@@ -62,7 +64,8 @@ Text extraction using Textract
 Data parsing and storage into DynamoDB
 Email summary dispatch via SES
 Deploy the function to AWS.
-7. Setup S3 Event Notification
+
+10. Setup S3 Event Notification
 Configure notification on the S3 bucket.
 Event Trigger: All object create events inside the incoming/ folder.
 Target: Invoke the receipt processor Lambda function.
